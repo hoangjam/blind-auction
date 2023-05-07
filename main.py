@@ -5,32 +5,27 @@ from art import logo
 print(logo)
 # each person's name is the key, and value will be their bid
 other_bids = True
-bidders = []
-winning_amount = 0
-winner = ""
+bidding = {}
 
-def add_bidder(name, amount):
-    new_bidder = {}
-    new_bidder["name"] = name
-    new_bidder["amount"] = amount
-    bidders.append(new_bidder)
+def highest_bidder(bidding_dict):
+    winning_amount = 0
+    winner = ""
+    for b in bidding_dict:
+        if bidding_dict[b] > winning_amount:
+            winning_amount = bidding_dict[b]
+            winner = b
+    print(f"The winner is {winner} with a bid of ${winning_amount}")
 
 while other_bids:
     name = str(input("Name of bidder? : "))
     bid = int(input("What is your bid amount? : $"))
     others = str(input("Are there other bidders? yes/no ")).lower()
 
-    add_bidder(name, bid)
-    
+    bidding[name] = bid
+
 
     if others == "no":
         other_bids = False
+        highest_bidder(bidding)
     else:
         clear()
-
-for i in bidders:
-    if i["amount"] > winning_amount:
-        winning_amount = i["amount"]
-        winner = i["name"]
-    
-print(f"The winner is {winner} with a bid of ${winning_amount}")
